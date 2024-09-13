@@ -1,4 +1,4 @@
-# OpCra
+# Op-CRA
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.1.
 
@@ -18,10 +18,29 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
+## Architecture choices
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### State Management
+  
+  Almost all state management is done through [ngRx's Signal Store](https://ngrx.io/guide/signals/signal-store), a store was created for each model that can be queried from the API, the goal is to be able to easily tell which type of data is being loaded and wheter or not there was an error.
+  For input, output and model management only signals are used to prepare for a migration to zoneless Angular
 
-## Further help
+### API Calls Management
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+  API calls are done through [Axios](https://www.npmjs.com/package/axios), an instance containing the baseUrl and other parameters like interceptors... can be found at `src/api/index.ts`.
+  For each data type that is queryable through the API an "endpoint" must be created, it's an abstract class contained inside the `endpoint` directory where each static method represents an API call.
+  All API calls must be done through endpoints.
+
+  Side note: If the need for local storage or caching arises, it might useful to create repositories to handle different data sources.
+
+### Data Management
+
+  Data management must be done by creating first a `model` which is an interface representing a raw JSON object received from the API. This interface must then be passed to a `DTO` class through a factory method called `fromJSON` to obtain an object that's easier to work with. For example your DTO could be used to convert unix timestamp to `Moment` instances.
+
+### Date Management
+
+  [MomentJS](https://momentjs.com) is used to manipulate dates and times. Try to use it as much as possible as it makes manipulating and formatting data much easier down the line.
+
+### Styling
+
+  [TailwindCss](https://tailwindcss.com) is used for styling. the keyword `@apply` can be used inside CSS files to apply tailwindcss utility classes.
