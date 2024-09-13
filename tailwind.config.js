@@ -3,19 +3,13 @@ module.exports = {
   content: ["./src/**/*.{html,ts}"],
   theme: {
     extend: {
-      keyframes: {
-        "grow": {
-          "0%": {
-            transform: "scaleX(0%)",
-          },
-          "100%": {
-            transform: "scaleX(100%)"
-          }
-        }
+      colors: {
+        "leave-day": "rgb(var(--leave-day))",
+        "leave-day-transparent": "rgb(var(--leave-day-transparent))",
+        tooltip: "rgb(var(--tooltip))",
+        border: "rgb(var(--border))",
+        overlay: "rgb(var(--overlay))",
       },
-      animation: {
-        "grow": "grow 2s forwards"
-      }
     },
   },
   plugins: [],

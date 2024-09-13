@@ -2,7 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-.animate-grow {
-  transform: scaleX(0);
-  transform-origin: 0%;
+/* Theme variables */
+@layer base {
+  :root {
+    --leave-day: 170 170 170;
+    --leave-day-transparent: 170 170 170 / 0.33;
+    --tooltip: 55 65 81;
+    --border: 229 231 235;
+    --overlay: 170 170 170 / 0.33;
+  }
+}
+
+input[type="date"] {
+  @apply px-1 w-full border-2 border-black xl:w-min;
 }
