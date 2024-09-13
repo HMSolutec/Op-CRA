@@ -1,0 +1,10 @@
+<div class="flex h-4 w-full relative bg-gray-400">
+  @for (activity of this.activityCollection.activities; track $index) {
+  <div
+    [style.left]="getLeft(activity)"
+    [style.right]="getRight(activity)"
+    [style.background-color]="activity.mission.color"
+    class="h-full absolute animate-grow"
+  ></div>
+  }
+</div>
