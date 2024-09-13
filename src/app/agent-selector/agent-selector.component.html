@@ -1,0 +1,13 @@
+@if (!agentStore.isLoading()) {
+<select
+  id="employee-select"
+  class="py-2 w-full"
+  (input)="onAgentSelect($event)"
+>
+  @for (agent of agentStore.agents(); track $index) {
+  <option class="text-center" [value]="agent.id">Agent {{ agent.name }}</option>
+  }
+</select>
+} @else {
+<h1 class="text-center">loading...</h1>
+}

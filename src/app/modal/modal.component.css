@@ -1,0 +1,11 @@
+label {
+  @apply flex gap-x-2 justify-between items-center h-fit;
+
+  & > span {
+    @apply flex-1;
+  }
+
+  & > input {
+    flex: 3;
+  }
+}

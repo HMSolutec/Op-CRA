@@ -1,0 +1,10 @@
+label {
+  & > input {
+    @apply hidden;
+  }
+  @apply border-spacing-1 border-2 rounded-md;
+}
+
+label:has(input:not(:checked)) {
+  @apply !border-transparent;
+}

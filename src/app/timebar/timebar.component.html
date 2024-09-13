@@ -1,10 +1,13 @@
-<div class="flex h-4 w-full relative bg-gray-400">
-  @for (activity of this.activityCollection.activities; track $index) {
-  <div
-    [style.left]="getLeft(activity)"
-    [style.right]="getRight(activity)"
-    [style.background-color]="activity.mission.color"
-    class="h-full absolute animate-grow"
-  ></div>
-  }
+<div
+  class="flex relative w-full h-8 border border-black group"
+  [class.bg-leave-day-transparent]="isLeaveDay()"
+>
+  @if (!isLeaveDay()) { @for (activity of this.activities(); track $index) {
+  <app-timebar-entry
+    [start]="activity.start"
+    [end]="activity.end"
+    [bg-color]="activity.mission.color"
+    (click)="onClickEntry($event, activity)"
+  />
+  } }
 </div>

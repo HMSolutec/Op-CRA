@@ -1,0 +1,19 @@
+<label
+  class="flex gap-x-2 items-end p-1 cursor-pointer"
+  [style.pointer-events]="interactive() ? undefined : 'none'"
+  [style.border-color]="color() + '55'"
+>
+  <input
+    [checked]="interactive() && selectedValue() === value()"
+    (change)="onValueChange($event)"
+    [name]="name()"
+    [value]="value()"
+    type="radio"
+  />
+  <div
+    class="border size-8 bg-leave-day-transparent border-leave-day"
+    [style.background-color]="color() ? color() + '55' : undefined"
+    [style.border-color]="color()"
+  ></div>
+  <span>{{ title() }}</span>
+</label>

@@ -1,0 +1,66 @@
+<div
+  class="flex fixed z-20 p-4 w-screen h-screen xl:p-12 bg-overlay"
+  (click)="onOutsideClick($event)"
+>
+  <form
+    class="flex flex-wrap gap-4 justify-between p-4 m-auto bg-white rounded-md w-fit"
+    [formGroup]="formGroup()"
+    (submit)="onSave($event)"
+    (click)="$event.stopPropagation()"
+  >
+    <fieldset class="flex overflow-y-scroll flex-col gap-2 xl:max-h-36 w-fit">
+      @for (item of missionStore.missions(); track $index) {
+      <app-mission-legend
+        [interactive]="true"
+        [color]="item.color"
+        [title]="item.title"
+        [value]="item.id"
+        formControlName="mission"
+        class="items-center"
+      ></app-mission-legend>
+      } @if (!uiStore.selectedActivity()) {
+      <app-mission-legend
+        [interactive]="true"
+        [value]="-1"
+        formControlName="mission"
+        title="Congés"
+      ></app-mission-legend>
+      }
+    </fieldset>
+    <div class="flex flex-col gap-y-2 max-md:w-full">
+      @if (!uiStore.selectedActivity()) {
+      <label>
+        <span>Date</span>
+        <input
+          formControlName="date"
+          id="activity-date"
+          type="date"
+          class="w-fit"
+        />
+      </label>
+      }
+      <label>
+        <span>From</span>
+        <input
+          formControlName="from"
+          id="activity-from"
+          type="time"
+          class="w-fit"
+          (change)="onChange($event)"
+        />
+      </label>
+      <label>
+        <span>To</span>
+        <input
+          formControlName="to"
+          id="activity-to"
+          type="time"
+          class="w-fit"
+        />
+      </label>
+      <button class="mt-2 text-white bg-blue-600 rounded-sm border">
+        {{ this.uiStore.selectedActivity() ? "Save" : "Create" }}
+      </button>
+    </div>
+  </form>
+</div>

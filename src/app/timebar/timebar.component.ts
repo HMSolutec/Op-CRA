@@ -1,51 +1,29 @@
-import { Component, Input } from '@angular/core';
-
-type Mission = {
-  id: number;
-  title: string;
-  color: string;
-};
-
-type Activity = {
-  start: Date;
-  end: Date;
-  mission: Mission;
-};
-
-export type ActivityCollection = {
-  date: Date;
-  activities: Activity[];
-  leaveDay?: boolean;
-};
+import { Component, inject, input, signal } from '@angular/core';
+import { ActivityDTO } from '../../dto/activities/activity.dto';
+import { UIStore } from '../../stores/ui.store';
+import { TimebarEntryComponent } from './timebar-entry/timebar-entry.component';
 
 @Component({
   selector: 'app-timebar',
   standalone: true,
-  imports: [],
+  imports: [TimebarEntryComponent],
   templateUrl: './timebar.component.html',
   styleUrl: './timebar.component.css',
 })
 export class TimebarComponent {
-  @Input({ required: true }) activityCollection!: ActivityCollection;
+  readonly uiStore = inject(UIStore);
 
-  getWidth(a: Activity) {
-    return `${Math.floor(
-      ((a.end.getTime() - a.start.getTime()) * 100) / (24 * 3600000)
-    )}%`;
+  activities = input.required<ActivityDTO[]>({ alias: 'activities' });
+  tooltipPosition = signal(100);
+  timestampTooltip = signal('');
+
+  isLeaveDay() {
+    return this.activities().some((a) => a.leaveDay);
   }
 
-  getLeft(a: Activity) {
-    return `${
-      (a.start.getTime() * 100) /
-      (this.activityCollection.date.getTime() + 24 * 3600000)
-    }%`;
-  }
+  onClickEntry(e: Event, activity: ActivityDTO) {
+    e.stopPropagation();
 
-  getRight(a: Activity) {
-    return `${
-      100 -
-      (a.end.getTime() * 100) /
-        (this.activityCollection.date.getTime() + 24 * 3600000)
-    }%`;
+    this.uiStore.openModal(activity);
   }
 }

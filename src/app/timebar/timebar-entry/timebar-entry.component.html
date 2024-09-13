@@ -1,0 +1,18 @@
+<div
+  [style.left]="leftValue()"
+  [style.right]="rightValue()"
+  [style.background-color]="transparentBgColor()"
+  [style.border-color]="bgColor()"
+  class="absolute h-full border-x entry"
+>
+  <div
+    class="hidden absolute right-full bottom-[120%] px-1 text-white bg-tooltip rounded-sm"
+  >
+    {{ startFormatted() }}
+  </div>
+  <div
+    class="hidden absolute left-full bottom-[120%] px-1 text-white bg-tooltip rounded-sm"
+  >
+    {{ endFormatted() }}
+  </div>
+</div>
